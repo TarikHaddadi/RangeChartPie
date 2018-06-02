@@ -1,28 +1,18 @@
 <html lang="en" class="">
-
 <head></head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <meta name="robots" content="noindex">
 <link rel="stylesheet prefetch" href="./css/style.css">
 <link rel="stylesheet prefetch" href="./css/animate.css">
 <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-
 </head>
-
 <body>
 <div class="rangeChart" id="rangeChart"></div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="./js/d3.v3.js"></script>
-<script src="./js/index.js"></script>
+<script src="./js/rangeChart.js"></script>
 </body>
 <script>
   $(function () {
-    // Custom Data
-    // $("#rangeChart").rangeChart();
-
     $("#rangeChart").rangeChart({
       choices: [
         {
@@ -239,7 +229,7 @@
       dozeVAlInit: null,
       currencyLabel: " $",
       showPie: true,
-      dir: 'rtl',
+      dir: 'ltr',
       showUnlimited: true,
       showIcons: true
     });
