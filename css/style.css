@@ -1,0 +1,979 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#rangeChart {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  font-family: roboto;
+}
+#rangeChart #pie {
+  position: fixed;
+  width: 100%;
+  vertical-align: top;
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
+  align-self: center;
+  -webkit-box-flex: 0.8;
+  -ms-flex: 0.8;
+  background: white;
+  z-index: 999;
+  top: 50%;
+  transform: translate(0, -50%);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all .3s ease-in-out;
+  border: 4px solid #3b80ff;
+}
+#rangeChart #pie.open {
+  right: 0;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.5686274509803921);
+  border-right: 0;
+}
+#rangeChart #pie > span {
+  position: absolute;
+  left: -50px;
+  width: 50px;
+  height: 80px;
+  background: #3b80ff;
+  border: 2px solid #3b80ff;
+  z-index: 999;
+  top: 20%;
+  transform: translate(0, -20%);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+}
+#rangeChart #chart-controls {
+  width: 96%;
+}
+#rangeChart .chart-zone {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+#rangeChart .chart-zone form {
+  width: 100%;
+}
+#rangeChart #rangebox {
+  display: block;
+  width: 100%;
+  margin-bottom: 80px;
+}
+#rangeChart #rangebox tbody {
+  display: block;
+}
+#rangeChart #rangebox tr {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  min-height: 70px;
+  margin: 100px 0;
+  position: relative;
+}
+#rangeChart #rangebox tr.unlimited-item .percentFill > * {
+  text-decoration: line-through;
+}
+#rangeChart #rangebox tr.unlimited-item .percentFill > span {
+  background: red;
+  color: #000;
+}
+#rangeChart #rangebox tr.unlimited-item .percentFill > span::after {
+  border-bottom-color: red;
+}
+#rangeChart #rangebox tr::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background-color: #e1e1e1;
+  bottom: -45px;
+}
+#rangeChart #rangebox tr:last-of-type {
+  margin-bottom: 0;
+}
+#rangeChart #rangebox tr .dragger_container {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+#rangeChart #rangebox td {
+  padding: 5px;
+}
+#rangeChart #rangebox .edit img {
+  max-width: 25px;
+  display: block;
+}
+#rangeChart #rangebox .edit {
+  padding: 10px;
+  border: thick white solid;
+  width: 70px;
+  height: 70px;
+  font-size: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column-reverse;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  text-align: center;
+  background-size: cover;
+  color: white;
+  border-radius: 100%;
+}
+#rangeChart ul#menu {
+  padding: 0;
+}
+#rangeChart ul#menu li {
+  display: inline;
+  padding: 3px 3px;
+}
+#rangeChart ul#menu li h4 span {
+  color: grey;
+  font-size: 12px;
+  font-weight: bolder;
+}
+#rangeChart ul#menu li h4 {
+  line-height: 2;
+  display: block;
+}
+#rangeChart button.init + button.print,
+#rangeChart button.submit + button.init {
+  margin-right: 15px;
+}
+#rangeChart button.print,
+#rangeChart button.submit,
+#rangeChart button.init {
+  border: 2px solid #f60;
+  background: #f60;
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 0;
+  color: #fff;
+  font-weight: bold;
+  margin: 10px auto;
+  display: inline-block;
+  float: right;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+}
+#rangeChart button.init {
+  border-color: #6f6761;
+}
+#rangeChart button.init:hover {
+  border-color: #6f6761;
+  background: #fff;
+  color: #6f6761;
+}
+#rangeChart button.submit:hover {
+  border-color: #f60;
+  background: #fff;
+  color: #f60;
+}
+#rangeChart button.print:hover {
+  border-color: #f60;
+  background: #fff;
+  color: #f60;
+}
+#rangeChart button.print:disabled,
+#rangeChart button.submit:disabled,
+#rangeChart button.init:disabled {
+  background: #e1e1e1;
+  border-color: #e1e1e1;
+  color: #aba9a9;
+  cursor: not-allowed;
+}
+#rangeChart button.init {
+  background: #6f6761;
+}
+#rangeChart .range-slider .range-value {
+  display: inline-block;
+  position: relative;
+  color: #fff;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 3px;
+  background: #353535;
+  padding: 5px 10px;
+  margin-left: 7px;
+  float: right;
+  margin-right: 32px;
+  margin-top: -20px;
+}
+#rangeChart .range-slider .range-value:after {
+  position: absolute;
+  top: 8px;
+  left: -6px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-right: 7px solid #353535;
+  border-bottom: 7px solid transparent;
+  content: '';
+}
+#rangeChart path.slice {
+  opacity: .7;
+}
+#rangeChart text.label {
+  opacity: .5;
+  font-weight: bolder;
+  color: black;
+  font-size: 15px;
+}
+#rangeChart polyline {
+  opacity: .15;
+}
+#rangeChart input::-moz-focus-inner {
+  border: 0;
+}
+#rangeChart .dragger_container {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+#rangeChart .dragger {
+  border-bottom: 7px solid #c3c2c8;
+  width: 90%;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  z-index: 99;
+}
+#rangeChart .dragger .item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  position: absolute;
+  color: #4a4a4a;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: initial;
+  line-height: 7px;
+}
+#rangeChart .dragger .item * {
+  color: #4a4a4a;
+  font-size: 12px;
+  letter-spacing: initial;
+  line-height: 20px;
+}
+#rangeChart .dragger .item span {
+  height: 12px;
+  width: 2px;
+  background: #c3c2c8;
+  display: block;
+  position: absolute;
+  top: -5px;
+  z-index: -9;
+}
+#rangeChart .dragger .item::after {
+  content: attr(data-value);
+  position: absolute;
+  top: -35px;
+  display: block;
+  min-width: 35px;
+  text-align: center;
+}
+#rangeChart .dragger .item::before {
+  content: attr(data-size);
+  position: absolute;
+  top: -20px;
+  display: block;
+  min-width: 35px;
+  text-align: center;
+}
+#rangeChart .dragger input[type="range"] {
+  position: absolute;
+  -webkit-appearance: none;
+  width: calc(100% + 13px);
+  margin: 0;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  outline: none;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+  -ms-transform: translate(-50%);
+  transform: translate(-50%);
+  top: -8px;
+  min-height: auto;
+  height: auto;
+}
+#rangeChart .dragger input[type="range"]::-moz-range-track {
+  border: initial;
+  background: transparent;
+}
+#rangeChart .dragger input[type="range"]::-ms-track {
+  border: initial;
+  color: transparent;
+  background: transparent;
+}
+#rangeChart .dragger input[type="range"]::-ms-fill-lower,
+#rangeChart .dragger input[type="range"]::-ms-fill-upper {
+  background: transparent;
+}
+#rangeChart .dragger input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 40px;
+  z-index: 9;
+  border: none;
+  background-image: url(../imgs/dragger.png);
+  background-size: 20px 20px;
+  background-position-y: 0px;
+  background-position-x: 0px;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border-radius: 0;
+  display: block;
+  cursor: pointer;
+}
+#rangeChart .dragger input[type="range"]::-ms-thumb {
+  appearance: none;
+  width: 20px;
+  height: 40px;
+  z-index: 9;
+  border: none;
+  background-image: url(../imgs/dragger.png);
+  background-size: 20px 20px;
+  background-position-y: 15px;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border-radius: 0;
+  display: block;
+  cursor: pointer;
+}
+#rangeChart .dragger input[type="range"]::-moz-range-thumb {
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 40px;
+  z-index: 9;
+  border: none;
+  background-image: url(../imgs/dragger.png);
+  background-size: 20px 20px;
+  background-position-y: 15px;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border-radius: 0;
+  display: block;
+  cursor: pointer;
+}
+#rangeChart .dragger input[type="range"]::-moz-focus-outer {
+  border: 0;
+}
+#rangeChart .dragger::after {
+  content: '';
+  position: absolute;
+  left: -10px;
+  width: 10px;
+  height: 2px;
+  background: #c3c2c8;
+  z-index: -1;
+  visibility: hidden;
+}
+#rangeChart .dragger::before {
+  content: '';
+  position: absolute;
+  right: -10px;
+  width: 10px;
+  height: 2px;
+  background: #c3c2c8;
+  z-index: -1;
+  visibility: hidden;
+}
+#rangeChart .dragger_controls {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+#rangeChart .dragger_controls.disabled span {
+  user-select: none;
+}
+#rangeChart .dragger_controls span {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  background: rgba(0, 140, 255, 0.76);
+  color: #fff;
+  border: 1px solid #e1e1e1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .3s ease-in-out;
+}
+#rangeChart .dragger_controls span:not(:last-of-type) {
+  margin-left: 5px;
+}
+#rangeChart .disabledFillUnlimited {
+  background: -webkit-repeating-linear-gradient(45deg, #ffed00, #f70 10px, #ffed00 10px, #f70 20px);
+  background: -o-repeating-linear-gradient(45deg, #ffed00, #f70 10px, #ffed00 10px, #f70 20px);
+  background: repeating-linear-gradient(45deg, #ffed00, #f70 10px, #ffed00 10px, #f70 20px);
+  position: absolute;
+  height: 7px;
+  right: 0;
+  z-index: -1;
+  transition: width .3s ease-out;
+}
+#rangeChart .disabledFillMin {
+  position: absolute;
+  left: 0;
+  background: -webkit-repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+  background: -o-repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+  background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+  height: 7px;
+  z-index: -2;
+  transition: width .3s ease-out;
+}
+#rangeChart .percentFill {
+  content: '';
+  background: #d7d7d7;
+  height: 7px;
+  position: absolute;
+  left: 0;
+  z-index: -2;
+  top: 0;
+  border-radius: 30px;
+  transition: width .3s ease-out;
+  right: 0;
+}
+#rangeChart .percentFill > span {
+  position: absolute;
+  font-size: 12px;
+  color: #f60;
+  top: 25px;
+  font-weight: bold;
+  background: black;
+  padding: 5px;
+  right: -70px;
+  border-radius: 5px;
+  min-width: 140px;
+  text-align: center;
+}
+#rangeChart .percentFill > span i {
+  color: #fff;
+  font-size: 10px;
+  display: block;
+}
+#rangeChart .percentFill > span::after {
+  content: '';
+  position: absolute;
+  border-right: 7px solid transparent;
+  border-left: 7px solid transparent;
+  border-bottom: 7px solid black;
+  top: -6px;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+  -ms-transform: translate(-50%);
+  transform: translate(-50%);
+}
+#rangeChart .percentFill > span.right_window {
+  -webkit-transform: translate(-90%);
+  -ms-transform: translate(-90%);
+  transform: translate(-90%);
+}
+#rangeChart .percentFill > span.left_window {
+  -webkit-transform: translate(-8%);
+  -ms-transform: translate(-8%);
+  transform: translate(-8%);
+}
+#rangeChart .percentFill > span.right_window::after {
+  -webkit-transform: translate(-100%);
+  -ms-transform: translate(-100%);
+  transform: translate(-100%);
+  right: -6%;
+  left: initial;
+}
+#rangeChart .percentFill > span.left_window::after {
+  -webkit-transform: translate(-100%);
+  -ms-transform: translate(-100%);
+  transform: translate(-100%);
+  left: 17%;
+}
+#rangeChart .totalString {
+  font-size: 15px;
+  font-weight: bold;
+}
+#rangeChart .unlimitedLabel {
+  font-size: 12px;
+  font-weight: 900;
+}
+#rangeChart .unlimitedImage {
+  transition: opacity .3s ease-in-out;
+}
+#rangeChart .sumValue {
+  font-size: 35px;
+  font-weight: bold;
+}
+#rangeChart .dozerSumValue {
+  font-size: 25px;
+  font-weight: bold;
+}
+#rangeChart #chart-dozer {
+  padding: 30px 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 320px;
+  margin: 0 auto;
+}
+#rangeChart #chart-dozer #amount {
+  padding: 10px 5px;
+  border: 2px solid #3b80ff;
+  background: #fff;
+  color: #3b80ff;
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  outline: none;
+  width: 100%;
+}
+#rangeChart #chart-dozer #amount::-webkit-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 1;
+  /* Firefox */
+  font-size: 15px;
+  font-weight: 300;
+}
+#rangeChart #chart-dozer #amount:-ms-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 1;
+  /* Firefox */
+  font-size: 15px;
+  font-weight: 300;
+}
+#rangeChart #chart-dozer #amount:-ms-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 1;
+  /* Firefox */
+  font-size: 15px;
+  font-weight: 300;
+}
+#rangeChart #chart-dozer #amount::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 1;
+  /* Firefox */
+  font-size: 15px;
+  font-weight: 300;
+}
+#rangeChart #chart-dozer #amount:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: white;
+  font-size: 15px;
+  font-weight: 300;
+}
+#rangeChart #chart-dozer #amount:-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: white;
+  font-size: 15px;
+  font-weight: 300;
+}
+#rangeChart #chart-dozer label {
+  display: block;
+}
+#rangeChart .unlimited {
+  position: relative;
+  width: 110px;
+  margin: 0 31px 0 15px;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#rangeChart .unlimited p {
+  display: block;
+  margin: 0 15px 0 0;
+  font-weight: bolder;
+}
+#rangeChart #unlimited {
+  display: block;
+}
+#rangeChart [type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+}
+#rangeChart [type='checkbox'] + label, [type='checkbox'] + div + label {
+  position: relative;
+  cursor: pointer;
+  padding-left: 25px;
+}
+#rangeChart [type='checkbox'] + label::before, [type='checkbox'] + div + label::before {
+  color: #fff;
+  display: unset;
+  content: '';
+  background-image: url("../imgs/unchecked.png");
+  background-size: 15px 15px;
+  width: 15px;
+  position: absolute;
+  height: 15px;
+  top: 2px;
+  left: 3px;
+}
+#rangeChart [type='checkbox']:checked + label::before, [type='checkbox']:checked + div + label::before {
+  background-image: url("../imgs/checked.png");
+}
+#rangeChart [type='checkbox'].disabled + label, [type='checkbox'][disabled] + label {
+  color: #fff;
+}
+#rangeChart [type='checkbox'].disabled + label::before, [type='checkbox'][disabled] + label::before {
+  box-shadow: none;
+}
+#rangeChart .plus:hover,
+#rangeChart .minus:hover {
+  transform: scale(.8);
+}
+#rangeChart .done {
+  width: 0;
+  visibility: hidden;
+}
+#rangeChart .done.animated {
+  width: auto;
+  visibility: visible;
+}
+/* RTL STYLES */
+#rangeChart[dir='rtl'] [type='checkbox'] + label, [type='checkbox'] + div + label {
+  padding-left: 0;
+  padding-right: 25px;
+}
+#rangeChart[dir='rtl'] [type='checkbox'] + label::before, [type='checkbox'] + div + label::before {
+  left: initial;
+  right: 0;
+}
+#rangeChart[dir='rtl'] .unlimited p {
+  margin: 0 0 15px 20px;
+}
+#rangeChart[dir='rtl'] .dragger_controls span:not(:first-of-type) {
+  margin-left: 10px;
+  margin-right: 0;
+}
+#rangeChart[dir='rtl'] #pie.open {
+  left: 0;
+  border-right: 4px solid #3b80ff;
+  border-left: none;
+}
+#rangeChart[dir='rtl'] #pie > span {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 15px;
+  border-top-right-radius: 15px;
+  right: -50px;
+  left: initial;
+}
+#rangeChart[dir='rtl'] button.print,
+#rangeChart[dir='rtl'] button.submit,
+#rangeChart[dir='rtl'] button.init {
+  float: left
+}
+#rangeChart[dir='rtl'] button.submit + button.init {
+  margin-left: 15px;
+}
+#rangeChart[dir='rtl'] .dragger_controls {
+  flex-direction: row-reverse;
+}
+#rangeChart[dir='rtl'] .disabledFill {
+  left: 0;
+  right: initial;
+}
+#rangeChart[dir='rtl'] .percentFill,
+#rangeChart[dir='rtl'] .disabledFillMin {
+  left: initial;
+  right: 0;
+}
+#rangeChart[dir='rtl'] .percentFill span {
+  direction: ltr;
+  left: initial;
+  right: 100%;
+  -webkit-transform: translate(48%);
+  -ms-transform: translate(48%);
+  transform: translate(48%);
+}
+#rangeChart[dir='rtl'] #chart-dozer * {
+  text-align: right;
+}
+/* Mediaqueries */
+@media screen and (min-width: 1201px ) {
+  #rangeChart #pie {
+    max-width: 600px;
+    right: -600px;
+  }
+  #rangeChart #pie > span:hover {
+    width: 70px;
+    left: -70px;
+  }
+  #rangeChart[dir='rtl'] #pie > span:hover {
+    width: 70px;
+    right: -70px;
+    left: initial;
+  }
+  #rangeChart[dir='rtl'] #pie {
+    left: -600px;
+    right: initial;
+  }
+}
+@media screen and (max-width: 1200px ) {
+  #rangeChart #pie {
+    max-width: 500px;
+    right: -500px;
+    top: 60%;
+  }
+}
+@media screen and (max-width: 1024px ) {
+  #rangeChart #pie {
+    max-width: 50%;
+    right: -50%;
+    top: 50%;
+  }
+  #rangeChart[dir='rtl'] #pie {
+    left: -50%;
+    right: initial;
+  }
+  #rangeChart #chart-controls {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 768px) {
+  #rangeChart #pie {
+    max-width: 85%;
+    right: -85%;
+  }
+  #rangeChart .unlimitedLabel {
+    font-size: 8px;
+  }
+  #rangeChart .chart-zone {
+    width: 100%;
+  }
+  #rangeChart .dragger {
+    left: 0;
+    position: relative;
+  }
+  #rangeChart text.label {
+    font-size: 10px;
+  }
+  #rangeChart .dozerSumValue,
+  #rangeChart .sumValue {
+    font-size: 20px;
+  }
+  #rangeChart .percentFill > span {
+    position: fixed;
+    right: 0;
+    width: auto;
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+    top: -85px;
+    left: initial;
+  }
+  #rangeChart .percentFill > span::after {
+    display: none;
+  }
+  #rangeChart #rangebox .edit {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: -98px;
+    z-index: 9;
+    left: -2px;
+  }
+  #rangeChart #rangebox tr {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+    margin: 130px 0 0;
+  }
+  #rangeChart #rangebox tr::after {
+    display: none;
+  }
+  #rangeChart .unlimited {
+    top: -90px;
+    width: 100%;
+    margin: 0;
+  }
+  #rangeChart .unlimited p {
+    margin: 0 15px 20px 0;
+    padding: 10px 50px;
+    width: 100%;
+    text-align: center;
+    border-radius: 30px;
+    font-size: 13px;
+  }
+  #rangeChart .dragger_controls {
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  #rangeChart button.submit,
+  #rangeChart button.init,
+  #rangeChart button.print {
+    float: none;
+    display: block;
+    width: 100%;
+  }
+  /* RTL */
+  #rangeChart[dir='rtl'] #pie {
+    left: -85%;
+    right: initial;
+  }
+  #rangeChart[dir='rtl'] [type='checkbox'] + label::before, [type='checkbox'] + div + label::before {
+    right: 5px;
+  }
+  #rangeChart[dir='rtl'] #rangebox .edit {
+    left: initial;
+  }
+  #rangeChart[dir='rtl'] button.submit,
+  #rangeChart[dir='rtl'] button.init {
+    float: none
+  }
+  #rangeChart[dir='rtl'] .percentFill span {
+    direction: ltr;
+    left: 0;
+    right: initial;
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+  }
+  #rangeChart[dir='rtl'] button.submit + button.init {
+    margin: 0;
+  }
+  #rangeChart[dir='rtl'] #rangebox .edit {
+    right: -2px;
+    left: initial;
+  }
+}
+/* Print */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    page-break-after: always;
+    page-break-inside: avoid;
+  }
+  #rangeChart #pie > span,
+  #rangeChart .minus,
+  #rangeChart .plus,
+  #rangeChart #chart-dozer,
+  #rangeChart button {
+    display: none !important;
+  }
+  #rangeChart #chart-controls,
+  #rangeChart .chart-zone form {
+    width: 95%;
+    margin: 0 auto;
+    page-break-inside: avoid;
+  }
+  #rangeChart #rangebox tr {
+    margin: 60px 0;
+    page-break-inside: avoid;
+  }
+  #rangeChart #rangebox tr:first-child {
+    margin-top: 0;
+  }
+  #rangeChart #pie {
+    position: relative;
+    transform: none;
+    page-break-inside: avoid;
+    border: none;
+  }
+  #rangeChart #pie.open {
+    box-shadow: none;
+  }
+  #rangeChart #rangebox tr:not(.unlimited-item) [type='checkbox'] + label, #rangeChart #rangebox tr:not(.unlimited-item) [type='checkbox'] + div + label {
+    display: none;
+  }
+  #rangeChart .dragger .item::after {
+    left: -40px;
+    top: -20px;
+  }
+  #rangeChart #rangebox tr::after {
+    height: 0;
+  }
+  #rangeChart[dir='rtl'] #pie.open {
+    border: 0;
+  }
+  @page {
+    margin: 1cm;
+  }
+}
+/* Animations */
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+#rangeChart .rotating {
+  -webkit-animation: rotating 2s linear infinite;
+  -moz-animation: rotating 2s linear infinite;
+  -ms-animation: rotating 2s linear infinite;
+  -o-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
+}
